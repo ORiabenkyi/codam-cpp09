@@ -1,6 +1,6 @@
 NAME = RPN
 CC   = c++
-CCFLAG = -Wall -Wextra -Werror -std=c++98
+CCFLAG = -Wall -Wextra -Werror -std=c++98 -Iinc
 DEBUG_FLAG = -DDEBUG=0
 
 SRCS = 	src/ReversePolishNotation.cpp \
