@@ -111,7 +111,7 @@ void PmergeMe::fjSortVecTagged(std::vector<std::pair<int, int> >& arr) {
     if (numPending > 0) {
         std::vector<int> order = jacobsthalOrder(numPending);
         for (size_t i = 0; i < order.size(); i++) {
-            int                                            idx     = order[i];
+            int                                             idx     = order[i];
             std::pair<int, int>                             aVal    = pendingA[idx];
             std::vector<std::pair<int, int> >::iterator     boundIt = mainChain.begin() + bPos[idx];
             std::vector<std::pair<int, int> >::iterator     pos =
@@ -242,6 +242,8 @@ void PmergeMe::parseArgs(int argc, char* argv[]) {
 }
 
 void PmergeMe::run(int argc, char* argv[]) {
+    
+    // input data to vector and deq
     parseArgs(argc, argv);
 
     std::cout << "Before:";
@@ -251,12 +253,14 @@ void PmergeMe::run(int argc, char* argv[]) {
 
     _comparisons     = 0;
     std::clock_t t0v = std::clock();
+    //sort vector
     fjSortVec(_vec);
     std::clock_t t1v = std::clock();
     long cmpVec      = _comparisons;
 
     _comparisons     = 0;
     std::clock_t t0d = std::clock();
+    //sort deq
     fjSortDeq(_deq);
     std::clock_t t1d = std::clock();
     long cmpDeq      = _comparisons;
@@ -266,6 +270,7 @@ void PmergeMe::run(int argc, char* argv[]) {
         std::cout << " " << _vec[i];
     std::cout << "\n";
 
+    //show result
     double usVec = static_cast<double>(t1v - t0v) / CLOCKS_PER_SEC * 1e6;
     double usDeq = static_cast<double>(t1d - t0d) / CLOCKS_PER_SEC * 1e6;
 
