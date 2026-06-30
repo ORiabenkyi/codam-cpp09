@@ -59,10 +59,6 @@ void PmergeMe::fjSortVec(std::vector<int>& arr) {
         arr[i] = tagged[i].first;
 }
 
-// arr holds (value, payload) pairs and is sorted ascending by value; payload
-// rides along through every swap/insert at no comparison cost. This lets the
-// recursive call on "winners" double as the permutation needed to align each
-// winner with its original loser, so the losers never need a separate sort.
 void PmergeMe::fjSortVecTagged(std::vector<std::pair<int, int> >& arr) {
     int n = static_cast<int>(arr.size());
     if (n <= 1)
@@ -88,8 +84,6 @@ void PmergeMe::fjSortVecTagged(std::vector<std::pair<int, int> >& arr) {
         pairs.push_back(std::make_pair(a, b));
     }
 
-    // Recurse on the winners, tagging each with its local index into
-    // `pairs` so the sorted order tells us exactly which loser goes where.
     std::vector<std::pair<int, int> > larger;
     larger.reserve(pairs.size());
     for (size_t i = 0; i < pairs.size(); i++)
@@ -105,9 +99,6 @@ void PmergeMe::fjSortVecTagged(std::vector<std::pair<int, int> >& arr) {
         pendingA[i] = pairs[localIdx].second;
     }
 
-    // bPos[i] tracks, without any comparisons, the current position in
-    // mainChain of pendingA[i]'s partner. It starts at i because mainChain
-    // and pendingA are built from the same sorted permutation above.
     std::vector<int> bPos(pendingA.size());
     for (size_t i = 0; i < bPos.size(); i++)
         bPos[i] = static_cast<int>(i);
